@@ -1,0 +1,12 @@
+import java.awt.Image;
+
+public class Componente {
+
+	private String descripcion;
+	private String nombre;
+	private Image imagen;
+	private int stock;
+	
+	
+	
+}

@@ -1,0 +1,9 @@
+import java.awt.Image;
+
+public class DiscoDuro extends Componente{
+
+	protected String tipoAlmacenamiento;
+	protected String capacidad;
+	
+	
+}

@@ -1,0 +1,24 @@
+package bucles_for;
+
+import java.util.Scanner;
+
+//Pide al usuario un número y muestra la suma de todos los números pares desde 2 hasta ese valor.
+
+public class Extra_01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int num1;
+		Scanner sc;
+		
+		System.out.println("Introduce el numero del cual quieras saber la suma de los numeros pares que hay entre 0 y el numero");
+		num1=sc.nextInt();
+		
+		for(num1=num1,int aux=2;aux<num1;aux+=2) {
+			System.out.println(aux+ "");
+		}
+		
+	}
+
+}

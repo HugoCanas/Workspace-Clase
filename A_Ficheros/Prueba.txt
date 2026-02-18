@@ -1,0 +1,5 @@
+
+Estamos en clase de programacion
+Vamos a utilizar ficheros
+
+Luego lo mostraremos por pantalla

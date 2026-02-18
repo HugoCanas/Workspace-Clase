@@ -1,0 +1,17 @@
+import java.awt.Image;
+
+public class Componente {
+
+	private int idComponente;
+	private String descripcion;
+	private String nombre;
+	private Image imagen;
+	private int stock;
+	private int idMarca;
+	private double precioVenta;
+
+	
+	
+	
+	
+}

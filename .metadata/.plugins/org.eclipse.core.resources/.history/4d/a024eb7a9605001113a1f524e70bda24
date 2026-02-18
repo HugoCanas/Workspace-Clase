@@ -1,0 +1,10 @@
+
+public class Monitor extends Componente {
+
+	protected String hz;
+	protected String medidas;
+	
+	
+	
+	
+}

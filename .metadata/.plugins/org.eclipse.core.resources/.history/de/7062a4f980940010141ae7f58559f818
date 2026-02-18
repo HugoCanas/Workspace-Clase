@@ -1,0 +1,14 @@
+package bucles_for;
+
+//Solicita un número y muestra la cuenta atrás desde ese número hasta 1, mostrando sólo los números impares.
+public class Extra_02 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int num1;
+		Scaner sc;
+		
+	}
+
+}

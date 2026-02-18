@@ -1,0 +1,8 @@
+
+public class Componente {
+
+	private String descripcion;
+	private String nombre;
+	private 
+	
+}

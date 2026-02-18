@@ -1,0 +1,10 @@
+
+public class PlacaBase extends Componente {
+
+	protected String socket;
+	protected String factorForma;
+	
+	
+	
+	
+}

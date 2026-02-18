@@ -1,0 +1,6 @@
+
+public class PlacaBase extends Componente {
+
+	protected String socket;
+	
+}

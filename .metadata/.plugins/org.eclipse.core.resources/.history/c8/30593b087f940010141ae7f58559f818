@@ -1,0 +1,17 @@
+package bucles_for;
+
+import java.util.Scanner;
+
+//Pide al usuario un número y muestra la suma de todos los números pares desde 2 hasta ese valor.
+
+public class Extra_01 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		int num1;
+		Scanner sc;
+		
+	}
+
+}

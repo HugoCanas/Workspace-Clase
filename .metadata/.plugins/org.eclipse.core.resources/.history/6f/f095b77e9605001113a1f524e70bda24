@@ -1,0 +1,18 @@
+import java.awt.Image;
+
+public class Monitor extends Componente {
+
+	protected String hz;
+	protected String medidas;
+	
+	
+	public Monitor(String descripcion, String nombre, Image imagen, int stock, String hz, String medidas) {
+		super(descripcion, nombre, imagen, stock);
+		this.hz = hz;
+		this.medidas = medidas;
+	}
+	
+	
+	
+	
+}

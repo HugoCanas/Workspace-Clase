@@ -1,0 +1,8 @@
+
+public class FuenteAlimentacion extends Componente{
+
+	protected String certificacionEnergetica;
+	protected String potencia;
+	
+	
+}

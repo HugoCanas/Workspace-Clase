@@ -1,0 +1,8 @@
+
+public class Ram extends Componente {
+
+	protected String tipo;
+	protected String frecuencia;
+	protected String capacidad;
+	
+}

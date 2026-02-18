@@ -1,0 +1,7 @@
+
+public class Raton extends Componente{
+
+	protected String dpi;
+	protected String 
+	
+}

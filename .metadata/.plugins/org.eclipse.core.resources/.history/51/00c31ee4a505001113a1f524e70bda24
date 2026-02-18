@@ -1,0 +1,11 @@
+import java.awt.Image;
+
+public class Caja extends Componente {
+
+	protected String dimensiones;
+	protected String puertosFrontales;
+	
+	
+	
+	
+}
