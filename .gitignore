@@ -1,19 +1,17 @@
-# Metadatos de Eclipse (no los queremos)
+# Metadatos de Eclipse
 .metadata/
 .recommenders/
 
-# Archivos de configuración de proyecto Eclipse
+# Configuración local de cada proyecto
+.settings/
 .classpath
 .project
-.settings/
 
-# Carpetas de compilados (solo queremos el código fuente)
+# Compilados
 bin/
 out/
 build/
 target/
-
-# Archivos compilados de Java
 *.class
 *.jar
 *.war
@@ -27,5 +25,5 @@ target/
 Thumbs.db
 desktop.ini
 
-# VS Code (por si acaso)
+# VS Code
 .vscode/
