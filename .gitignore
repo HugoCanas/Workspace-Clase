@@ -1,0 +1,31 @@
+# Metadatos de Eclipse (no los queremos)
+.metadata/
+.recommenders/
+
+# Archivos de configuración de proyecto Eclipse
+.classpath
+.project
+.settings/
+
+# Carpetas de compilados (solo queremos el código fuente)
+bin/
+out/
+build/
+target/
+
+# Archivos compilados de Java
+*.class
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VS Code (por si acaso)
+.vscode/
