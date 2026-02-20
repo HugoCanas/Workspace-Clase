@@ -5,6 +5,7 @@
 		<item key="replaceBarOpen" value="false"/>
 		<item key="selection" value="import java.awt.EventQueue;"/>
 		<list key="findhistory">
+			<item value="list"/>
 			<item value="-"/>
 			<item value="import com.mysql.cj.protocol.Resultset;"/>
 			<item value="strMails"/>
@@ -19,7 +20,6 @@
 			<item value="last"/>
 			<item value="registrar"/>
 			<item value="scann"/>
-			<item value="ele"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -1,7 +1,0 @@
-
-public class Refrigeracion extends Componente{
-
-	protected String tipo;
-	protected String tamanio;
-	
-}

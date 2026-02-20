@@ -14,10 +14,7 @@
     <fullyQualifiedTypeName name="sun.swing.SwingAccessor.JTextComponentAccessor"/>
     <fullyQualifiedTypeName name="javax.swing.JComponent"/>
     <fullyQualifiedTypeName name="MiBaseDatos"/>
-    <fullyQualifiedTypeName name="java.util.Scanner"/>
     <fullyQualifiedTypeName name="java.awt.FileDialog"/>
-    <fullyQualifiedTypeName name="java.io.File"/>
-    <fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
     <fullyQualifiedTypeName name="java.awt.event.ItemListener"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="javax.swing.event.ListSelectionListener"/>
@@ -39,7 +36,6 @@
     <fullyQualifiedTypeName name="Ahorcado"/>
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="javax.swing.Timer"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="EventosAhorcado"/>
     <fullyQualifiedTypeName name="EventosAreaDibujo"/>
     <fullyQualifiedTypeName name="java.awt.Font"/>
@@ -47,4 +43,9 @@
     <fullyQualifiedTypeName name="java.awt.Graphics"/>
     <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
     <fullyQualifiedTypeName name="javax.imageio.ImageIO"/>
+    <fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
+    <fullyQualifiedTypeName name="javax.swing.DefaultListModel"/>
+    <fullyQualifiedTypeName name="java.util.Scanner"/>
+    <fullyQualifiedTypeName name="java.io.File"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 </qualifiedTypeNameHistroy>

@@ -1,6 +1,0 @@
-
-public class Procesador extends Componente {
-
-	protected String numNucleos;
-	
-}

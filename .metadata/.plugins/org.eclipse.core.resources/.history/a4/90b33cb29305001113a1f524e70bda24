@@ -1,7 +1,0 @@
-
-public class Caja extends Componente {
-
-	protected String dimensiones;
-	protected String 
-	
-}

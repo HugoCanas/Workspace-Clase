@@ -1,7 +1,0 @@
-
-public class prueba extends Componente{
-
-	private int stock;
-	private String marca;
-	
-}

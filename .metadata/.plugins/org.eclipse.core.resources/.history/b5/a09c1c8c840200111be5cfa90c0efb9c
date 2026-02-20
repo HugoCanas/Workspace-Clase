@@ -1,8 +1,0 @@
-
-// REPRESENTA AL SUUARIO Y GUARDA DATOS, NOOO VA A VALIDAR Y NOOO CONECTAMOS A LA BD
-
-public class Usuario {
-
-	private String nombreUsuario;
-	private String contrasenaUsuario;
-}
