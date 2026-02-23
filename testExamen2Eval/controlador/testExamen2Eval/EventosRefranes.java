@@ -17,7 +17,7 @@ public class EventosRefranes {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+		        // 1. Ver qué radio está seleccionado
 				String fichero;
 				Scanner scFichero;
 
@@ -36,14 +36,14 @@ public class EventosRefranes {
 					fichero="Refran3.txt";
 
 				}
-
+				 // 2. Leer el fichero
 				try {
 					scFichero= new Scanner(new File(fichero));
 					refranes.getModelo().clear();
 					numElements=0;
 					//LEER EL FICHERO LINEA A GUARDANDO LOS DATOS
 					refranes.setStrRefran(scFichero.nextLine());
-
+			        // 3. Cargar el resto de líneas en la lista
 					while(scFichero.hasNext()){
 
 						refranes.getModelo().addElement(scFichero.nextLine());
