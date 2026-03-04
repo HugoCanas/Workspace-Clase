@@ -624,13 +624,7 @@ public class MisSMS extends JFrame {
 				String mensaje;
 				areaMensaje.getText();
 				
-				
-				
 				areaMensaje.setText(arrayMensajes[listaPersonas.getSelectedIndex()]);
-				
-				
-
-
 			}
 		});
 		

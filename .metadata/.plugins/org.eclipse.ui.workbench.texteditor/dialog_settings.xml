@@ -5,6 +5,7 @@
 		<item key="replaceBarOpen" value="false"/>
 		<item key="selection" value="import java.awt.EventQueue;"/>
 		<list key="findhistory">
+			<item value="dibujarLetra"/>
 			<item value="nombre"/>
 			<item value="chck"/>
 			<item value="chckbxTodos"/>
@@ -19,7 +20,6 @@
 			<item value="addLis"/>
 			<item value="btn"/>
 			<item value="JButton"/>
-			<item value="JButton[] "/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
