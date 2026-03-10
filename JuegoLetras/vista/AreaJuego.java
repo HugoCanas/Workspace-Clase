@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 import javax.swing.JPanel;
 
@@ -13,7 +15,7 @@ public class AreaJuego extends JPanel{
 	private ArrayList<Cuadrado> arrayCuadrados;
 	private ArrayList<Circulo> arrayCirculos;
 
-	private String letras="ABCDEFGHIJKLMN�OPQRSTUVWXYZ";
+	private String letras="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"; 
 	private JuegoLetras juegoLetras;
 	private EventosAreaJuego eventosAreaJuego;
 	private int estadoJuego;
@@ -42,16 +44,13 @@ public class AreaJuego extends JPanel{
 			circulo.dibujar(g);
 			cuadrado.dibujar(g);
 		}else {//ESTAMOS EN MODO JUEGO
-
 			for (Cuadrado cuadrado : arrayCuadrados) {
 				cuadrado.dibujar(g);
 			}
-
 			for (Circulo circulo : arrayCirculos) {
 				circulo.dibujar(g);
 			}
 		}
-
 	}
 
 	public void crearObjetos() {
@@ -73,13 +72,53 @@ public class AreaJuego extends JPanel{
 
 		for(int cont=0;cont<cantidad;cont++) {
 			cuadrado=new Cuadrado();
+			circulo= new Circulo();
 			//falta la posicion
 			cuadrado.setPosX(50+(Cuadrado.TAM+Cuadrado.SEP)*(cont%5));
 			cuadrado.setPosY(20+(Cuadrado.TAM+Cuadrado.SEP)*(cont/5));
 			arrayCuadrados.add(cuadrado);
+			circulo.setPosX(50+(Circulo.TAM+ Circulo.SEP)*(cont%5));
+			circulo.setPosY(250+(Circulo.TAM+ Circulo.SEP)*(cont/5));
+			circulo.setColor(Color.pink);
+			arrayCirculos.add(circulo);
 		}
+		crearLetrasCuadrados();
+		crearLetrasCirculos();
 
 	}
+
+	private void crearLetrasCuadrados() {
+		Random r;
+		int pos;
+		String letra;
+		r= new Random();
+
+		for(int i=0; i<arrayCuadrados.size(); i++) {
+			//CREAR LETRAS ALEATORIAS PARA LOS CUADRADOS
+			pos=r.nextInt(letras.length());
+			letra=letras.charAt(pos)+"";
+			arrayCuadrados.get(i).setLetra(letra);
+			for(int j=0; j<i;j++) {
+				//comprobar que en las anteriores no esta repetida
+				if(arrayCuadrados.get(j).getLetra().equals(letra)) {
+					i--;
+					break;
+				}
+			}
+		}
+	}
+	
+	private void crearLetrasCirculos() {
+		//LLENAR NUEVO ARRAYLIST CON POSICIONES DE LOS CUADRADOS (0,1,2,3,4,5,6...)
+		Collections.shuffle(arrayCirculos);
+		for (int i = 0; i<arrayCuadrados.size(); i++) {
+			arrayCirculos.get(i).setLetra(arrayCuadrados.get(i).getLetra().toLowerCase());
+		}
+		//PARA CADA
+		
+	}
+
+
 
 	public void crearCirculo() {
 
