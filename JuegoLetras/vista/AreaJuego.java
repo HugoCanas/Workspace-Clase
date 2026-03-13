@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,105 +10,96 @@ import javax.swing.JPanel;
 public class AreaJuego extends JPanel{
 	public static final int PRESENT=0;
 	public static final int JUEGO=1;
+	public static final int COMPROBAR=2;
+	
+	private int estadoJuego;
 
 	private Cuadrado cuadrado;
 	private Circulo circulo;
 	private ArrayList<Cuadrado> arrayCuadrados;
 	private ArrayList<Circulo> arrayCirculos;
 
-	private String letras="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ"; 
+	private String letras="ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+
 	private JuegoLetras juegoLetras;
 	private EventosAreaJuego eventosAreaJuego;
-	private int estadoJuego;
+	private int aciertos;
+	private int fallos;
 
-	//CONSTRUCTOR
+	//CONSTRUCTORES
 	public AreaJuego(JuegoLetras juegoLetras) {
-		setBackground(Color.WHITE);
 		this.juegoLetras=juegoLetras;
 		estadoJuego=PRESENT;
-		circulo= new Circulo(Color.PINK, Cuadrado.TAM ,Cuadrado.TAM, "a", 10,500, 5, 1,-1);
-		cuadrado= new Cuadrado(Color.CYAN, Cuadrado.TAM ,Cuadrado.TAM,"A", 700,10, 5, -1,1);
+		circulo = new Circulo(Color.PINK, Cuadrado.TAM, Cuadrado.TAM, "a", 20, 500, 8, 1, -1);
+		cuadrado = new Cuadrado(Color.CYAN, Cuadrado.TAM, Cuadrado.TAM, "A", 680, 20, 8, -1, 1);
 
 		arrayCuadrados = new ArrayList<Cuadrado>();
 		arrayCirculos = new ArrayList<Circulo>();
+		eventosAreaJuego = new EventosAreaJuego(this);
 
-		eventosAreaJuego=new EventosAreaJuego(this); 
 	}
 
 	@Override
 	public void paint(Graphics g) {
-		//DIBUJA TOOOOOOOOOOOOOOOOOOOOOODOS
 		// TODO Auto-generated method stub
 		super.paint(g);
-
 		if(estadoJuego==PRESENT) {
-			circulo.dibujar(g);
 			cuadrado.dibujar(g);
-		}else {//ESTAMOS EN MODO JUEGO
-			for (Cuadrado cuadrado : arrayCuadrados) {
-				cuadrado.dibujar(g);
+			circulo.dibujar(g);
+		} else { //importante el orden porque el ultimo que se dibuja es el que esta por encima
+			for (Cuadrado c : arrayCuadrados) {
+				c.dibujar(g);
 			}
-			for (Circulo circulo : arrayCirculos) {
-				circulo.dibujar(g);
+			for (Circulo c : arrayCirculos) {
+				c.dibujar(g);
+			}
+			if(estadoJuego==COMPROBAR) {
+				g.setFont(new Font("Arial", Font.BOLD, 40));
+				g.setColor(Color.GREEN);
+				g.drawString("Aciertos: " + aciertos, 80, 400);
+				g.setColor(Color.RED);
+				g.drawString("Fallos: " + fallos, 80, 450);
 			}
 		}
 	}
 
+
 	public void crearObjetos() {
+		//Crear cuadradados y circulos, posicionarlos
 		int cantidad;
 		Cuadrado cuadrado;
 		Circulo circulo;
-		// TODO Auto-generated method stub
-		//INSTANCIAR LOS ARRAYLIST 
+
 		arrayCuadrados.clear();
 		arrayCirculos.clear();
-		//CREAR CUADRADOS Y CIRCULOS, POSICIONARLOS 
 		if(juegoLetras.getRdbtnFacil().isSelected()) {
-			cantidad=5;
-		}else if (juegoLetras.getRdbtnMedio().isSelected()){
-			cantidad=10;
-		}else {
-			cantidad=15;
+			cantidad = 5;
+		} else if(juegoLetras.getRdbtnMedio().isSelected()) {
+			cantidad = 10;
+		} else {
+			cantidad = 15;
 		}
 
-		for(int cont=0;cont<cantidad;cont++) {
-			cuadrado=new Cuadrado();
-			circulo= new Circulo();
-			//falta la posicion
-			cuadrado.setPosX(50+(Cuadrado.TAM+Cuadrado.SEP)*(cont%5));
-			cuadrado.setPosY(20+(Cuadrado.TAM+Cuadrado.SEP)*(cont/5));
+		for(int i = 0; i<cantidad; i++) {
+			cuadrado = new Cuadrado();
+			circulo = new Circulo();
+			cuadrado.setPosX(100+(Cuadrado.TAM+Cuadrado.SEP)*(i%5));
+			cuadrado.setPosY(20+(Cuadrado.TAM+Cuadrado.SEP)*(i/5));
 			arrayCuadrados.add(cuadrado);
-			circulo.setPosX(50+(Circulo.TAM+ Circulo.SEP)*(cont%5));
-			circulo.setPosY(250+(Circulo.TAM+ Circulo.SEP)*(cont/5));
-			circulo.setColor(Color.pink);
+			circulo.setPosX(100+(Circulo.TAM+Circulo.SEP)*(i%5));
+			circulo.setPosXinic(circulo.getPosX());
+			circulo.setPosY(300+(Circulo.TAM+Circulo.SEP)*(i/5));
+			circulo.setPosYinic(circulo.getPosY());
+			circulo.setColor(Color.PINK);
 			arrayCirculos.add(circulo);
 		}
+		//Crear letra aleatorias para los cuadrados
 		crearLetrasCuadrados();
 		crearLetrasCirculos();
 
 	}
 
-	private void crearLetrasCuadrados() {
-		Random r;
-		int pos;
-		String letra;
-		r= new Random();
 
-		for(int i=0; i<arrayCuadrados.size(); i++) {
-			//CREAR LETRAS ALEATORIAS PARA LOS CUADRADOS
-			pos=r.nextInt(letras.length());
-			letra=letras.charAt(pos)+"";
-			arrayCuadrados.get(i).setLetra(letra);
-			for(int j=0; j<i;j++) {
-				//comprobar que en las anteriores no esta repetida
-				if(arrayCuadrados.get(j).getLetra().equals(letra)) {
-					i--;
-					break;
-				}
-			}
-		}
-	}
-	
 	private void crearLetrasCirculos() {
 		//LLENAR NUEVO ARRAYLIST CON POSICIONES DE LOS CUADRADOS (0,1,2,3,4,5,6...)
 		Collections.shuffle(arrayCirculos);
@@ -115,17 +107,38 @@ public class AreaJuego extends JPanel{
 			arrayCirculos.get(i).setLetra(arrayCuadrados.get(i).getLetra().toLowerCase());
 		}
 		//PARA CADA
-		
-	}
-
-
-
-	public void crearCirculo() {
 
 	}
 
-	public void crearCuadrado() {
+	private void crearLetrasCuadrados() {
+		Random r;
+		int pos;
+		String letra;
+		r=new Random();
+		for(int i = 0; i<arrayCuadrados.size(); i++) {
+			//generar letra y guardarla en el cudrado actual
+			pos = r.nextInt(letras.length());
+			letra = letras.charAt(pos)+"";
+			arrayCuadrados.get(i).setLetra(letra);
+			for(int j = 0; j<i; j++) {
+				//comprobar que en las anteriores no esta repetida
+				if(arrayCuadrados.get(j).getLetra().equals(letra))
+				{
+					i--;
+					break;
+				}
 
+			}
+		}
+	}
+
+	//GETTERS/SETTERS
+	public int getEstadoJuego() {
+		return estadoJuego;
+	}
+
+	public void setEstadoJuego(int estadoJuego) {
+		this.estadoJuego = estadoJuego;
 	}
 
 	public Cuadrado getCuadrado() {
@@ -184,13 +197,22 @@ public class AreaJuego extends JPanel{
 		this.eventosAreaJuego = eventosAreaJuego;
 	}
 
-	public int getEstadoJuego() {
-		return estadoJuego;
+	public void comprobar() {
+		aciertos = 0;
+		fallos = 0;
+		estadoJuego = COMPROBAR;
+		for(Circulo cir: arrayCirculos) {
+			if(cir.getPareja().getLetra().equalsIgnoreCase(cir.getLetra()))
+			{
+				aciertos++;
+				cir.setColor(Color.GREEN);
+			}else {
+				fallos++;
+				cir.setColor(Color.RED);
+			}
+			
+		}
+		
 	}
-
-	public void setEstadoJuego(int estadoJuego) {
-		this.estadoJuego = estadoJuego;
-	}
-
 
 }

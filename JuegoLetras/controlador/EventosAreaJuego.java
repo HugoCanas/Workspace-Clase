@@ -1,11 +1,10 @@
+import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.Iterator;
 
 import javax.swing.Timer;
 
@@ -14,28 +13,23 @@ public class EventosAreaJuego {
 	private AreaJuego areaJuego;
 	private Circulo circuloSeleccionado;
 	private Cuadrado cuadradoSeleccionado;
-	public Timer reloj;
+	private Timer reloj;
 	int despX,despY;
 
 	public EventosAreaJuego(AreaJuego areaJuego) {
-		this.areaJuego=areaJuego;
-		circuloSeleccionado= null;
-		cuadradoSeleccionado = null;
-		despX=despY=0;
+		this.areaJuego = areaJuego;
 
-		reloj=new Timer(20, new ActionListener() {
+		reloj = new Timer(20, new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//MOVER TODOS LOS OBJETOS QUE FORMAN PARTE DEL JUEGO
+				//Mover las figuras que forman parte del juego
 				areaJuego.getCuadrado().mover();
 				areaJuego.getCirculo().mover();
-				//SI EL CUADRADO COLISIONA CON EL CIRCULO
 				if(areaJuego.getCuadrado().getRect().intersects(areaJuego.getCirculo().getRect())) {
 					reloj.stop();
 				}
-
-				areaJuego.repaint();	
+				areaJuego.repaint();
 			}
 		});
 
@@ -45,7 +39,27 @@ public class EventosAreaJuego {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
+				if(circuloSeleccionado!=null) {
+					if(cuadradoSeleccionado!=null) {
+						cuadradoSeleccionado.setColor(Color.CYAN);
+						circuloSeleccionado.setPosX(cuadradoSeleccionado.getPosX());
+						circuloSeleccionado.setPosY(cuadradoSeleccionado.getPosY()+Cuadrado.TAM*3/4);
+						circuloSeleccionado.setPareja(cuadradoSeleccionado);
+						cuadradoSeleccionado.setEmparejado(true);
+					}else {
+						circuloSeleccionado.setPosX(circuloSeleccionado.getPosXinic());
+						circuloSeleccionado.setPosY(circuloSeleccionado.getPosYinic());
+					}
+					circuloSeleccionado=null;
+					cuadradoSeleccionado=null;
+
+					if(todosEmparejados()) {
+						areaJuego.getJuegoLetras().getBtnStart().setEnabled(true);
+						areaJuego.getJuegoLetras().getBtnStart().setText("Comprobar");
+					}
+
+					areaJuego.repaint();
+				}
 
 			}
 
@@ -59,13 +73,14 @@ public class EventosAreaJuego {
 				mouseRect = new Rectangle(e.getX(), e.getY(), 1, 1); //LE HACEMOS UN PRQUEÑO RECTANGULO AL RATON 
 				//COMPROBAR SI HEMOS COGIDO UN CIRCULO Y ASIGNARLO
 				for ( Circulo  circulo : areaJuego.getArrayCirculos() ) {
-					if (mouseRect.intersects(circulo.getRect())) {
+					if (mouseRect.intersects(circulo.getRect()) && circulo.getPareja()==null) {
 						circuloSeleccionado = circulo;
 						despX=e.getX()-circuloSeleccionado.getPosX();
 						despY=e.getY()-circuloSeleccionado.getPosY();
 						break;
 					}
 				}
+
 			}
 		}); // FIN DEL MOUSE LISTENER
 
@@ -75,19 +90,39 @@ public class EventosAreaJuego {
 			public void mouseMoved(MouseEvent e) {
 				// TODO Auto-generated method stub
 
-
 			}
 
 			@Override
 			public void mouseDragged(MouseEvent e) {
-				// TODO Auto-generated method stub
+				Rectangle cirRect, cuadRect;
 				if(circuloSeleccionado != null) {
 					circuloSeleccionado.setPosX(e.getX()-despX);
 					circuloSeleccionado.setPosY(e.getY()-despY);
+					cirRect=circuloSeleccionado.getRect();
+					for(Cuadrado cuad: areaJuego.getArrayCuadrados()) {
+						cuadRect=cuad.getRect();
+						if(cirRect.intersects(cuadRect) && !cuad.isEmparejado()) {
+							cuad.setColor(Color.YELLOW);
+							cuadradoSeleccionado = cuad;
+							break;
+						} else {
+							cuad.setColor(Color.CYAN);
+							cuadradoSeleccionado = null;
+						}
+					}		
 					areaJuego.repaint();
 				}
 			}
 		});
+	}
+
+	protected boolean todosEmparejados() {
+		for(Cuadrado cuad: areaJuego.getArrayCuadrados()) {
+			if(!cuad.isEmparejado()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public AreaJuego getAreaJuego() {
@@ -105,6 +140,4 @@ public class EventosAreaJuego {
 	public void setReloj(Timer reloj) {
 		this.reloj = reloj;
 	}
-
-
 }
