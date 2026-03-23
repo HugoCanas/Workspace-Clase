@@ -1,5 +1,5 @@
+import java.awt.Graphics;
 import java.awt.Image;
-import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
@@ -7,55 +7,90 @@ public class Caballo {
 	public static final int QUIETO=0;
 	public static final int CORRIENDO=1;
 	public static final int SALTANDO=2;
+
 	//DATOS
-	private Image[] arrayImagenes;
-	private Image[] arrayImagenesDcha;
+	private Image[] arrayImagenesIzq;
+	private Image[] arrayImagesDcha;
 	private int velocidad;
-	private int posX,posY;
+	private int posX, posY;
 	private int ancho, alto;
+	private int dirH, dirV;
 	private int estado;
 	private int imgActual;
-	
+	private int contAnimaciones;
+
 	private AreaJuego areaJuego;
-	
-	public Caballo (AreaJuego areaJuego) {
-		this.areaJuego= areaJuego;
-		velocidad = 5;
+
+	public Caballo(AreaJuego areaJuego) {
+		this.areaJuego=areaJuego;
+		velocidad=6;
 		estado=QUIETO;
-		posX = 0;
-		posY = 560; 
-		ancho = 90;
-		alto = 60;
+		posX=0;
+		posY=660;
+		dirH=1;
+		dirV=0;
+		ancho=120;
+		alto=90;
 		imgActual=7;
+		contAnimaciones=0;
 		cargarImagenes();
 	}
 
+	public void cargarImagenes() {
+		arrayImagesDcha = new Image[8];
+		arrayImagenesIzq = new Image[8];
 
-	private void cargarImagenes() {
+		for (int i = 0; i < 8; i++) {
+			arrayImagesDcha[i] = new ImageIcon(getClass().getResource("CaballoD" + (i + 1) + ".png")).getImage();
+			arrayImagenesIzq[i] = new ImageIcon(getClass().getResource("CaballoI" + (i + 1) + ".png")).getImage();
+		}
+	}
+
+	public void dibujar(Graphics g) {
+		if(estado==QUIETO) {
+			imgActual=7;
+		}
+		if (dirH==1) {
+			g.drawImage(arrayImagesDcha[imgActual], posX, posY, ancho, alto, areaJuego);
+		}else {
+			g.drawImage(arrayImagenesIzq[imgActual], posX, posY, ancho, alto, areaJuego);
+		}
+	}
+
+	public void mover() {
+		
+		if(estado==QUIETO) {
+			return;
+		}
 		// TODO Auto-generated method stub
-		arrayImagenesDcha = new Image[8];
-		arrayImagenes = new Image[8];
-		for(int i = 0;i<arrayImagenesDcha.length;i++) {
-			arrayImagenesDcha[1]= new ImageIcon(getClass().getResource("CaballoD"+(i+1)+".png")).getImage();
-			arrayImagenes[1]= new ImageIcon(getClass().getResource("CaballoI"+(i+1)+".png")).getImage();
+		if(posX>0 && dirH==-1 || posX + ancho <= areaJuego.getWidth() && dirH == 1) {
+			posX=posX+velocidad*dirH; 	
+		}
+		//ANIMACION
+		contAnimaciones++;
+		if(contAnimaciones==4) {
+			imgActual++;
+			imgActual= (imgActual+1)%8;
+			contAnimaciones=0;
 		}
 	}
 
 
-	public Image[] getArrayImagenes() {
-		return arrayImagenes;
+	//GETTERS Y SETTERS
+	public Image[] getArrayImagenesIzq() {
+		return arrayImagenesIzq;
 	}
 
-	public void setArrayImagenes(Image[] arrayImagenes) {
-		this.arrayImagenes = arrayImagenes;
+	public void setArrayImagenesIzq(Image[] arrayImagenesIzq) {
+		this.arrayImagenesIzq = arrayImagenesIzq;
 	}
 
-	public Image[] getArrayImagenesDcha() {
-		return arrayImagenesDcha;
+	public Image[] getArrayImagesDcha() {
+		return arrayImagesDcha;
 	}
 
-	public void setArrayImagenesDcha(Image[] arrayImagenesDcha) {
-		this.arrayImagenesDcha = arrayImagenesDcha;
+	public void setArrayImagesDcha(Image[] arrayImagesDcha) {
+		this.arrayImagesDcha = arrayImagesDcha;
 	}
 
 	public int getVelocidad() {
@@ -121,4 +156,23 @@ public class Caballo {
 	public void setAreaJuego(AreaJuego areaJuego) {
 		this.areaJuego = areaJuego;
 	}
+
+	public int getDirH() {
+		return dirH;
+	}
+
+	public void setDirH(int dirH) {
+		this.dirH = dirH;
+	}
+
+	public int getDirV() {
+		return dirV;
+	}
+
+	public void setDirV(int dirV) {
+		this.dirV = dirV;
+	}
+
+
+
 }

@@ -31,16 +31,19 @@ public class MiJuego extends JFrame {
 	 * Create the frame.
 	 */
 	public MiJuego() {
-		setTitle("Juego Caballos");
 		setResizable(false);
+		setTitle("MiJuego");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1700, 900);
+		setBounds(100, 100, 1700, 800);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+
 		areaJuego = new AreaJuego();
-		contentPane.add(areaJuego, BorderLayout.CENTER); //Para añadir areaJuego al centro de la pantalla
+		contentPane.add(areaJuego, BorderLayout.CENTER);
+		areaJuego.setFocusable(true);
+		areaJuego.requestFocus();
 	}
 
 }
