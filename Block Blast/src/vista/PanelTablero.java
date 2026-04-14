@@ -19,12 +19,14 @@ public class PanelTablero extends JPanel {
 	    setBackground(Color.BLACK);
 	    setPreferredSize(new java.awt.Dimension(COLS*CELDA, FILAS*CELDA));
 
-	    int[][] forma = {
+	    /*int[][] forma = {
 	        {1, 1, 1},
 	        {1, 1, 1},
 	        {1, 1, 1}
 	    };
 	    pieza = new Pieza(forma);
+	    */
+	    
 	}
 	
 

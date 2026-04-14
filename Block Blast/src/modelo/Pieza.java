@@ -12,8 +12,25 @@ public class Pieza {
 			Color.GREEN,
 			Color.MAGENTA
 	};
-
-	private int[][] forma;
+ 
+	private static final int[][][] FORMAS = {
+				    {{1,0,0},{0,0,0},{0,0,0}},
+				    {{1,1,0},{0,0,0},{0,0,0}},// línea horizontal de 2
+				    {{1,1,1},{0,0,0},{0,0,0}},// línea horizontal de 3
+				    {{1,0,0},{1,0,0},{0,0,0}},// línea vertical de 2
+				    {{1,0,0},{1,0,0},{1,0,0}},// línea vertical de 3
+				    {{1,1,0},{1,1,0},{0,0,0}},// cuadrado 2x2
+				    {{1,1,1},{1,1,1},{1,1,1}},// cuadrado 3x3
+				    {{1,0,0},{1,0,0},{1,1,0}},// L pequeña normal
+				    {{0,1,0},{0,1,0},{1,1,0}},// L pequeña invertida
+				    {{1,1,0},{1,0,0},{1,0,0}},// J pequeña normal
+				    {{1,1,0},{0,1,0},{0,1,0}},// J pequeña invertida
+				    {{1,1,1},{0,1,0},{0,0,0}},// forma t
+				    {{0,1,1},{1,1,0},{0,0,0}},// forma s
+				    {{1,1,0},{0,1,1},{0,0,0}},// forma z
+		};	
+	     
+	private int [][] forma;
 	private Color color;
 	
 	//HACER AQUI TODO EL PROCESO DE LAS FORMAS DIFERENTES
