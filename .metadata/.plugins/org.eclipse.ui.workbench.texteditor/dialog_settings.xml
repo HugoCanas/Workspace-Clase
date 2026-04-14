@@ -5,6 +5,7 @@
 		<item key="replaceBarOpen" value="false"/>
 		<item key="selection" value="import java.awt.EventQueue;"/>
 		<list key="findhistory">
+			<item value="mover"/>
 			<item value="timer"/>
 			<item value="pareja"/>
 			<item value="dibujarLetra"/>
@@ -19,7 +20,6 @@
 			<item value="mouse"/>
 			<item value="array;emsajes"/>
 			<item value="modelo"/>
-			<item value="addLis"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

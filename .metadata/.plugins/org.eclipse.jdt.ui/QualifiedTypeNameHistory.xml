@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="java.sql.Connection"/>
-    <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
     <fullyQualifiedTypeName name="java.sql.ResultSet"/>
     <fullyQualifiedTypeName name="java.awt.Component"/>
     <fullyQualifiedTypeName name="sun.swing.SwingAccessor.JTextComponentAccessor"/>
@@ -35,18 +33,14 @@
     <fullyQualifiedTypeName name="javax.swing.event.ListSelectionListener"/>
     <fullyQualifiedTypeName name="java.awt.event.TextListener"/>
     <fullyQualifiedTypeName name="MisSMS"/>
-    <fullyQualifiedTypeName name="java.awt.Graphics"/>
     <fullyQualifiedTypeName name="JuegoLetras"/>
-    <fullyQualifiedTypeName name="javax.swing.Timer"/>
     <fullyQualifiedTypeName name="java.awt.FontMetrics"/>
-    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
     <fullyQualifiedTypeName name="EventosJuegoLetras"/>
     <fullyQualifiedTypeName name="java.util.ArrayList"/>
     <fullyQualifiedTypeName name="Cuadrado"/>
     <fullyQualifiedTypeName name="java.util.Collections"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseListener"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseAdapter"/>
-    <fullyQualifiedTypeName name="java.awt.Rectangle"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseMotionListener"/>
     <fullyQualifiedTypeName name="java.awt.event.MouseMotionAdapter"/>
     <fullyQualifiedTypeName name="java.awt.Font"/>
@@ -55,9 +49,15 @@
     <fullyQualifiedTypeName name="java.awt.Color"/>
     <fullyQualifiedTypeName name="java.awt.Image"/>
     <fullyQualifiedTypeName name="java.io.IOException"/>
-    <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
     <fullyQualifiedTypeName name="java.awt.event.KeyListener"/>
     <fullyQualifiedTypeName name="EventosAreaJuego"/>
-    <fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
     <fullyQualifiedTypeName name="AreaJuego"/>
+    <fullyQualifiedTypeName name="javax.swing.Timer"/>
+    <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+    <fullyQualifiedTypeName name="java.awt.event.KeyEvent"/>
+    <fullyQualifiedTypeName name="Caballo"/>
+    <fullyQualifiedTypeName name="javax.swing.ImageIcon"/>
+    <fullyQualifiedTypeName name="java.awt.Graphics"/>
+    <fullyQualifiedTypeName name="java.awt.Rectangle"/>
+    <fullyQualifiedTypeName name="java.lang.Thread"/>
 </qualifiedTypeNameHistroy>

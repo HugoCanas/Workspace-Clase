@@ -1,0 +1,19 @@
+PLAN DEL JUEGO:
+
+Clase Piezas: 
+
+Array Bidimensional (para el 3 x 3) 
+Relleno 0 o 1 dependiendo de si esta vacio o no 
+Hacer un array de Colores (meter 6 o parecido) y que cuando se muestre la pieza por la pantalla asi no siempre tengan el mismo color
+
+
+Ventana de juego: 
+
+Tendria dos layouts:
+uno pegado abajo ( o sino a la izquierda de la pantalla) donde se mostrarian las piezas actuales (las de esta ronda o tanda) 
+Otro (que seria un grid layout de 8 x 8 donde se jugaria (el tablero de juego digamos)
+
+
+Gestion de derrota: Ya que el juego va a ser infinito cuando comprobar si las piezas que actualmente tiene el usuario en esta tanda sin
+activar y si ninguna de ellas entra en el tablero decirle que ha perdido en una ventana diferente a la que estaba. 
+
