@@ -16,15 +16,17 @@ public class PanelTablero extends JPanel {
 	private Pieza pieza;
 
 	public PanelTablero() {
-		setBackground(Color.BLACK);
+	    setBackground(Color.BLACK);
+	    setPreferredSize(new java.awt.Dimension(COLS*CELDA, FILAS*CELDA));
 
-		int[][] forma = {
-			{1, 0, 0},
-			{1, 0, 0},
-			{1, 1, 0}
-		};
-		pieza = new Pieza(forma, Color.BLUE);
+	    int[][] forma = {
+	        {1, 1, 1},
+	        {1, 1, 1},
+	        {1, 1, 1}
+	    };
+	    pieza = new Pieza(forma);
 	}
+	
 
 	@Override
 	protected void paintComponent(Graphics g) {

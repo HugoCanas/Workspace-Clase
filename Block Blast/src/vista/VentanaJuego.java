@@ -28,7 +28,7 @@ public class VentanaJuego extends JFrame {
 	public VentanaJuego() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Block Blast");
-		setBounds(100, 100, 400, 430);
+		setBounds(150, 150, 500, 500);
 		setResizable(false);
 
 		contentPane = new JPanel();
