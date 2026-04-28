@@ -38,14 +38,23 @@ public class EventosAreaJuego {
 				if(piezaSeleccionada==null) return;
 
 				Tablero t=areaJuego.getTablero();
-				//Calcular fila y col usando el bloque donde se agarro
-				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.OFFSET_Y)/Pieza.TAM);
-				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.OFFSET_X)/Pieza.TAM);
+				//Calcular fila y col donde caeria la pieza
+				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.MARGEN_Y)/Pieza.TAM);
+				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 
 				if(t.cabe(piezaSeleccionada,fila,col)) {
 					//Colocar la pieza
 					t.colocar(piezaSeleccionada,fila,col);
 					piezaSeleccionada.setColocada(true);
+
+					//Limpiar lineas completas y sumar puntos
+					int lineas=t.limpiarLineas();
+					if(lineas==1) {
+						areaJuego.setPuntuacion(areaJuego.getPuntuacion()+10);
+					} else if(lineas>=2) {
+						//Combo: mas puntos
+						areaJuego.setPuntuacion(areaJuego.getPuntuacion()+lineas*20);
+					}
 
 					//Comprobar si las 3 estan colocadas para generar nueva ronda
 					boolean todasColocadas=true;
@@ -60,7 +69,7 @@ public class EventosAreaJuego {
 					}
 
 					//Comprobar game over
-					if(areaJuego.hayGameOver()) {
+					if(areaJuego.comprobarGameOver()) {
 						areaJuego.setEstado(AreaJuego.GAME_OVER);
 					}
 				} else {
@@ -86,9 +95,9 @@ public class EventosAreaJuego {
 				piezaSeleccionada.setPosX(e.getX()-despX);
 				piezaSeleccionada.setPosY(e.getY()-despY);
 
-				//Calcular preview
-				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.OFFSET_Y)/Pieza.TAM);
-				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.OFFSET_X)/Pieza.TAM);
+				//preview
+				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.MARGEN_Y)/Pieza.TAM);
+				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 				areaJuego.setPreviewFila(fila);
 				areaJuego.setPreviewCol(col);
 				areaJuego.setMostrarPreview(true);

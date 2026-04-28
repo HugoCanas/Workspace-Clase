@@ -8,7 +8,9 @@ public class Pieza {
 
 	public static final int TAM=40;
 
-	private static final Color[] COLORES = {Color.BLUE, Color.RED, Color.YELLOW,Color.GREEN, Color.MAGENTA
+	private static final Color[] COLORES = {
+		Color.BLUE, Color.RED, Color.YELLOW,
+		Color.GREEN, Color.MAGENTA
 	};
 
 	private static final int[][][] FORMAS = {
@@ -52,8 +54,8 @@ public class Pieza {
 
 	//MÉTODOS
 	public void dibujar(Graphics g) {
-		for(int f=0; f<3; f++) {
-			for(int c=0; c<3; c++) {
+		for(int f=0;f<3;f++) {
+			for(int c=0;c<3;c++) {
 				if(forma[f][c]==1) {
 					int x=posX+c*TAM;
 					int y=posY+f*TAM;
@@ -70,8 +72,8 @@ public class Pieza {
 
 	//Comprobar si el raton ha pulsado encima y guardar en que bloque
 	public boolean contiene(int mx, int my) {
-		for(int f=0; f<3; f++) {
-			for(int c=0; c<3; c++) {
+		for(int f=0;f<3;f++) {
+			for(int c=0;c<3;c++) {
 				if(forma[f][c]==1) {
 					int x=posX+c*TAM;
 					int y=posY+f*TAM;

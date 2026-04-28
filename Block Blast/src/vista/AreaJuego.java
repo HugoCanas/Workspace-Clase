@@ -3,10 +3,10 @@ package vista;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
-
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-
 import controlador.EventosAreaJuego;
 import modelo.Pieza;
 import modelo.Tablero;
@@ -15,8 +15,8 @@ public class AreaJuego extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final int OFFSET_X=40;
-	public static final int OFFSET_Y=20;
+	public static final int MARGEN_X=40;
+	public static final int MARGEN_Y=20;
 	public static final int Y_PIEZAS=380;
 	public static final int[] X_PIEZAS={20,170,320};
 
@@ -33,6 +33,9 @@ public class AreaJuego extends JPanel {
 	private int previewFila,previewCol;
 	private boolean mostrarPreview;
 
+	//Imagen game over
+	private Image imgGameOver;
+
 	//CONSTRUCTOR
 	public AreaJuego() {
 		setBackground(Color.BLACK);
@@ -44,23 +47,24 @@ public class AreaJuego extends JPanel {
 		mostrarPreview=false;
 		previewFila=-1;
 		previewCol=-1;
+		imgGameOver=new ImageIcon(getClass().getResource("/FotoDerrota.png")).getImage();
 		generarPiezas();
 		eventosAreaJuego=new EventosAreaJuego(this);
 	}
 
 	//Crear 3 piezas nuevas
 	public void generarPiezas() {
-		arrayPiezas.clear(); //para vaciarlo
-		for(int i=0; i<3; i++) {
+		arrayPiezas.clear();
+		for(int i=0;i<3;i++) {
 			arrayPiezas.add(new Pieza(X_PIEZAS[i],Y_PIEZAS));
 		}
 	}
 
-	//Comprobar si ninguna pieza disponible cabe en el tablero
-	public boolean hayGameOver() {
+	//Comprobar si ninguna pieza cabe -> game over
+	public boolean comprobarGameOver() {
 		for(Pieza p : arrayPiezas) {
-			if(!p.isColocada() && tablero.puedeColocarseEnAlgunSitio(p)) {
-				return false;
+			if(!p.isColocada() && tablero.cabeEnAlgunSitio(p)) {
+				return false; //si alguna cabe no es game over
 			}
 		}
 		return true;
@@ -69,40 +73,35 @@ public class AreaJuego extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		//Tablero
-		tablero.dibujar(g,OFFSET_X,OFFSET_Y,Pieza.TAM);
 
-		//Previsualizacion semitransparente
-		if(mostrarPreview && eventosAreaJuego.getPiezaSeleccionada()!=null) {
-			Pieza sel=eventosAreaJuego.getPiezaSeleccionada();
-			if(tablero.cabe(sel,previewFila,previewCol)) {
-				tablero.dibujarPreview(g,sel,previewFila,previewCol,OFFSET_X,OFFSET_Y,Pieza.TAM);
+		if(estado==JUEGO) {
+			//Tablero
+			tablero.dibujar(g,MARGEN_X,MARGEN_Y,Pieza.TAM);
+
+			//Previsualizacion
+			if(mostrarPreview && eventosAreaJuego.getPiezaSeleccionada()!=null) {
+				Pieza sel=eventosAreaJuego.getPiezaSeleccionada();
+				if(tablero.cabe(sel,previewFila,previewCol)) {
+					tablero.dibujarPreview(g,sel,previewFila,previewCol,MARGEN_X,MARGEN_Y,Pieza.TAM);
+				}
 			}
-		}
 
-		//Piezas no colocadas
-		for(Pieza p : arrayPiezas) {
-			if(!p.isColocada()) {
-				p.dibujar(g);
+			//Piezas no colocadas
+			for(Pieza p : arrayPiezas) {
+				if(!p.isColocada()) {
+					p.dibujar(g);
+				}
 			}
-		}
 
-		//Puntuacion
-		g.setColor(Color.WHITE);
-		g.setFont(new Font("Arial",Font.BOLD,18));
-		g.drawString("Puntos: "+puntuacion,20,540);
-
-		//Pantalla game over
-		if(estado==GAME_OVER) {
-			g.setColor(new Color(0,0,0,200));
-			g.fillRect(0,0,getWidth(),getHeight());
-			g.setColor(Color.RED);
-			g.setFont(new Font("Arial",Font.BOLD,48));
-			g.drawString("GAME OVER",80,260);
+			//Puntuacion abajo
 			g.setColor(Color.WHITE);
-			g.setFont(new Font("Arial",Font.BOLD,24));
-			g.drawString("Puntos: "+puntuacion,150,310);
-		}
+			g.setFont(new Font("Arial",Font.BOLD,18));
+			g.drawString("Puntos: "+puntuacion,20,540);
+
+		} else if(estado==GAME_OVER) {
+			//Dibujar la imagen de game over
+			imgGameOver=new ImageIcon(getClass().getResource("/FotoDerrota.png")).getImage();
+			}
 	}
 
 	//GETTERS Y SETTERS
