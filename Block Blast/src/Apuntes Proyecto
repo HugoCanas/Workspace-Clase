@@ -10,10 +10,23 @@ Hacer un array de Colores (meter 6 o parecido) y que cuando se muestre la pieza 
 Ventana de juego: 
 
 Tendria dos layouts:
-uno pegado abajo ( o sino a la izquierda de la pantalla) donde se mostrarian las piezas actuales (las de esta ronda o tanda) 
+Uno pegado abajo ( o sino a la izquierda de la pantalla) donde se mostrarian las piezas actuales (las de esta ronda o tanda) 
 Otro (que seria un grid layout de 8 x 8 donde se jugaria (el tablero de juego digamos)
 
 
 Gestion de derrota: Ya que el juego va a ser infinito cuando comprobar si las piezas que actualmente tiene el usuario en esta tanda sin
 activar y si ninguna de ellas entra en el tablero decirle que ha perdido en una ventana diferente a la que estaba. 
 
+Animacion: 
+
+Cuando se consigue un combo de 2 (ya sea lineas, columnas o linea y columna) hacer que vibre un poco la pantalla 
+
+
+Hacer que las piezas las pueda agarrar el usuario arrastrarlas y dejarlas en el tablero (necesito que el raton actue como supuesto dedo) 
+
+
+para mover las piezas hacerlo por cuadrantes.    
+
+Hay que tener en cuenta que la pieza no es lo mismo si la coges desde abajo que si la coges desde arriba del todo, entonces detectar en que bloque esta agarrando la pieza 
+y poder ser previsualizarla, ya sea con un color mas claro al original, o con un color mas opaco. Asi se puede saber bien donde se va a dejar la pieza si es que la suelto.
+ya                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         

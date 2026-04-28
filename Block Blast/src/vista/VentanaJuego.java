@@ -1,6 +1,6 @@
 package vista;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,31 +11,32 @@ public class VentanaJuego extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private AreaJuego areaJuego;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaJuego frame = new VentanaJuego();
+					VentanaJuego frame=new VentanaJuego();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	} 
 
 	public VentanaJuego() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Block Blast");
-		setBounds(150, 150, 500, 500);
 		setResizable(false);
-
-		contentPane = new JPanel();
-		contentPane.setBackground(Color.BLACK);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane=new JPanel();
+		contentPane.setBorder(new EmptyBorder(5,5,5,5));
+		contentPane.setLayout(new BorderLayout(0,0));
 		setContentPane(contentPane);
-
-		contentPane.add(new PanelTablero());
+		areaJuego=new AreaJuego();
+		contentPane.add(areaJuego,BorderLayout.CENTER);
+		pack();
+		setLocationRelativeTo(null);
 	}
 }
