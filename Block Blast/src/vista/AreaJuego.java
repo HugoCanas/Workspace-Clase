@@ -4,9 +4,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
+
 import controlador.EventosAreaJuego;
 import modelo.Pieza;
 import modelo.Tablero;
@@ -36,6 +41,17 @@ public class AreaJuego extends JPanel {
 	//Imagen game over
 	private Image imgGameOver;
 
+	//Para la vibracion al hacer combo
+	private Timer relojVibracion;
+	private int vibracionX;
+	private int contVibracion;
+
+	//Para el parpadeo al limpiar lineas
+	private Timer relojParpadeo;
+	private int contParpadeo;
+	private boolean parpadeoVisible;
+	private boolean parpadeoActivo;
+
 	//CONSTRUCTOR
 	public AreaJuego() {
 		setBackground(Color.BLACK);
@@ -47,7 +63,51 @@ public class AreaJuego extends JPanel {
 		mostrarPreview=false;
 		previewFila=-1;
 		previewCol=-1;
-		imgGameOver=new ImageIcon(getClass().getResource("/FotoDerrota.png")).getImage();
+		imgGameOver=new ImageIcon("recursos/FotoDerrota.png").getImage();
+
+		//Vibracion
+		vibracionX=0;
+		contVibracion=0;
+		relojVibracion=new Timer(40,new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contVibracion++;
+				if(contVibracion%2==0) {
+					vibracionX=5;
+				} else {
+					vibracionX=-5;
+				}
+				repaint();
+				if(contVibracion>=8) {
+					relojVibracion.stop();
+					vibracionX=0;
+					contVibracion=0;
+					repaint();
+				}
+			}
+		});
+
+		//Parpadeo
+		parpadeoActivo=false;
+		parpadeoVisible=false;
+		contParpadeo=0;
+		relojParpadeo=new Timer(60,new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				contParpadeo++;
+				parpadeoVisible=!parpadeoVisible;
+				repaint();
+				if(contParpadeo>=4) {
+					relojParpadeo.stop();
+					parpadeoActivo=false;
+					parpadeoVisible=false;
+					contParpadeo=0;
+					tablero.limpiarMarcadas();
+					repaint();
+				}
+			}
+		});
+
 		generarPiezas();
 		eventosAreaJuego=new EventosAreaJuego(this);
 	}
@@ -64,7 +124,7 @@ public class AreaJuego extends JPanel {
 	public boolean comprobarGameOver() {
 		for(Pieza p : arrayPiezas) {
 			if(!p.isColocada() && tablero.cabeEnAlgunSitio(p)) {
-				return false; //si alguna cabe no es game over
+				return false;
 			}
 		}
 		return true;
@@ -75,14 +135,19 @@ public class AreaJuego extends JPanel {
 		super.paint(g);
 
 		if(estado==JUEGO) {
-			//Tablero
-			tablero.dibujar(g,MARGEN_X,MARGEN_Y,Pieza.TAM);
+			//Tablero con vibracion
+			tablero.dibujar(g,MARGEN_X+vibracionX,MARGEN_Y,Pieza.TAM);
+
+			//Parpadeo
+			if(parpadeoActivo && parpadeoVisible) {
+				tablero.dibujarParpadeo(g,MARGEN_X+vibracionX,MARGEN_Y,Pieza.TAM);
+			}
 
 			//Previsualizacion
 			if(mostrarPreview && eventosAreaJuego.getPiezaSeleccionada()!=null) {
 				Pieza sel=eventosAreaJuego.getPiezaSeleccionada();
 				if(tablero.cabe(sel,previewFila,previewCol)) {
-					tablero.dibujarPreview(g,sel,previewFila,previewCol,MARGEN_X,MARGEN_Y,Pieza.TAM);
+					tablero.dibujarPreview(g,sel,previewFila,previewCol,MARGEN_X+vibracionX,MARGEN_Y,Pieza.TAM);
 				}
 			}
 
@@ -99,9 +164,17 @@ public class AreaJuego extends JPanel {
 			g.drawString("Puntos: "+puntuacion,20,540);
 
 		} else if(estado==GAME_OVER) {
-			//Dibujar la imagen de game over
-			imgGameOver=new ImageIcon(getClass().getResource("/FotoDerrota.png")).getImage();
-			}
+			int imgW=imgGameOver.getWidth(this);
+			int imgH=imgGameOver.getHeight(this);
+			int panelW=getWidth();
+			int panelH=getHeight();
+			double escala=Math.max((double)panelW/imgW,(double)panelH/imgH);
+			int anchoFinal=(int)(imgW*escala);
+			int altoFinal=(int)(imgH*escala);
+			int posX=(panelW-anchoFinal)/2;
+			int posY=(panelH-altoFinal)/2;
+			g.drawImage(imgGameOver,posX,posY,anchoFinal,altoFinal,this);
+		}
 	}
 
 	//GETTERS Y SETTERS
@@ -167,5 +240,21 @@ public class AreaJuego extends JPanel {
 
 	public void setMostrarPreview(boolean mostrarPreview) {
 		this.mostrarPreview=mostrarPreview;
+	}
+
+	public Timer getRelojVibracion() {
+		return relojVibracion;
+	}
+
+	public boolean isParpadeoActivo() {
+		return parpadeoActivo;
+	}
+
+	public void setParpadeoActivo(boolean parpadeoActivo) {
+		this.parpadeoActivo=parpadeoActivo;
+	}
+
+	public Timer getRelojParpadeo() {
+		return relojParpadeo;
 	}
 }

@@ -22,6 +22,7 @@ public class EventosAreaJuego {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				if(areaJuego.getEstado()==AreaJuego.GAME_OVER) return;
+				if(areaJuego.isParpadeoActivo()) return;
 				//Comprobar si hemos pulsado sobre una pieza
 				for(Pieza p : areaJuego.getArrayPiezas()) {
 					if(!p.isColocada() && p.contiene(e.getX(),e.getY())) {
@@ -38,7 +39,6 @@ public class EventosAreaJuego {
 				if(piezaSeleccionada==null) return;
 
 				Tablero t=areaJuego.getTablero();
-				//Calcular fila y col donde caeria la pieza
 				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.MARGEN_Y)/Pieza.TAM);
 				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 
@@ -47,16 +47,22 @@ public class EventosAreaJuego {
 					t.colocar(piezaSeleccionada,fila,col);
 					piezaSeleccionada.setColocada(true);
 
-					//Limpiar lineas completas y sumar puntos
-					int lineas=t.limpiarLineas();
-					if(lineas==1) {
-						areaJuego.setPuntuacion(areaJuego.getPuntuacion()+10);
-					} else if(lineas>=2) {
-						//Combo: mas puntos
-						areaJuego.setPuntuacion(areaJuego.getPuntuacion()+lineas*20);
+					//Detectar lineas completas
+					int lineas=t.detectarLineas();
+					if(lineas>0) {
+						//Arrancar parpadeo
+						areaJuego.setParpadeoActivo(true);
+						areaJuego.getRelojParpadeo().start();
+						//Sumar puntos
+						if(lineas==1) {
+							areaJuego.setPuntuacion(areaJuego.getPuntuacion()+10);
+						} else if(lineas>=2) {
+							areaJuego.setPuntuacion(areaJuego.getPuntuacion()+lineas*20);
+							areaJuego.getRelojVibracion().start();
+						}
 					}
 
-					//Comprobar si las 3 estan colocadas para generar nueva ronda
+					//Comprobar si las 3 estan colocadas
 					boolean todasColocadas=true;
 					for(Pieza p : areaJuego.getArrayPiezas()) {
 						if(!p.isColocada()) {
@@ -95,7 +101,7 @@ public class EventosAreaJuego {
 				piezaSeleccionada.setPosX(e.getX()-despX);
 				piezaSeleccionada.setPosY(e.getY()-despY);
 
-				//preview
+				//Calcular preview
 				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.MARGEN_Y)/Pieza.TAM);
 				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 				areaJuego.setPreviewFila(fila);
