@@ -5,21 +5,21 @@
 		<item key="replaceBarOpen" value="false"/>
 		<item key="selection" value="import java.awt.EventQueue;"/>
 		<list key="findhistory">
+			<item value="guardar"/>
+			<item value="list"/>
+			<item value="lstIzq"/>
+			<item value="modelo"/>
+			<item value="Jlist"/>
+			<item value="Combo"/>
+			<item value="Modelo"/>
+			<item value="fichero"/>
+			<item value="File"/>
+			<item value="EventosMis"/>
+			<item value="JList"/>
+			<item value="AreaJuego"/>
+			<item value="Area"/>
 			<item value="mover"/>
 			<item value="timer"/>
-			<item value="pareja"/>
-			<item value="dibujarLetra"/>
-			<item value="nombre"/>
-			<item value="chck"/>
-			<item value="chckbxTodos"/>
-			<item value="arrayMensajes"/>
-			<item value="AreaMen"/>
-			<item value="getArrayMensa"/>
-			<item value="arrayMensa"/>
-			<item value="ArrayMen"/>
-			<item value="mouse"/>
-			<item value="array;emsajes"/>
-			<item value="modelo"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
