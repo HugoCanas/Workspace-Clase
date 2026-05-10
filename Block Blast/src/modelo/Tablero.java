@@ -9,7 +9,7 @@ public class Tablero {
 	public static final int COLS=8;
 
 	//DATOS
-	private Color[][] celdas; //null = vacia, Color = ocupada
+	private Color[][] celdas;
 	private boolean[] filasComp;
 	private boolean[] colsComp;
 
@@ -38,7 +38,7 @@ public class Tablero {
 		}
 	}
 
-	//Dibujar las celdas completas en blanco para el parpadeo
+	
 	public void dibujarParpadeo(Graphics g, int margenX, int margenY, int tam) {
 		for(int f=0;f<FILAS;f++) {
 			for(int c=0;c<COLS;c++) {
@@ -52,7 +52,7 @@ public class Tablero {
 		}
 	}
 
-	//Dibujar preview donde caeria la pieza
+	
 	public void dibujarPreview(Graphics g, Pieza pieza, int fila, int col, int margenX, int margenY, int tam) {
 		int[][] forma=pieza.getForma();
 		for(int f=0;f<3;f++) {
@@ -67,7 +67,7 @@ public class Tablero {
 		}
 	}
 
-	//Comprobar si cabe la pieza en esa posicion
+	
 	public boolean cabe(Pieza pieza, int fila, int col) {
 		int[][] forma=pieza.getForma();
 		for(int f=0;f<3;f++) {
@@ -83,7 +83,7 @@ public class Tablero {
 		return true;
 	}
 
-	//Colocar la pieza en el tablero
+
 	public void colocar(Pieza pieza, int fila, int col) {
 		int[][] forma=pieza.getForma();
 		for(int f=0;f<3;f++) {
@@ -95,7 +95,7 @@ public class Tablero {
 		}
 	}
 
-	//Detectar lineas completas y marcarlas (NO las borra)
+
 	public int detectarLineas() {
 		int lineas=0;
 		boolean completa;
@@ -128,7 +128,7 @@ public class Tablero {
 		return lineas;
 	}
 
-	//Vaciar las celdas marcadas
+
 	public void limpiarMarcadas() {
 		for(int f=0;f<FILAS;f++) {
 			for(int c=0;c<COLS;c++) {
@@ -139,7 +139,7 @@ public class Tablero {
 		}
 	}
 
-	//Comprobar si la pieza cabe en algun sitio
+	
 	public boolean cabeEnAlgunSitio(Pieza pieza) {
 		for(int f=0;f<FILAS;f++) {
 			for(int c=0;c<COLS;c++) {

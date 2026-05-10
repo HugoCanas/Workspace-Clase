@@ -19,7 +19,7 @@ public class PiezaEspecial extends Pieza {
 					int y=getPosY()+f*TAM;
 					g.setColor(getColor());
 					g.fillRect(x+2,y+2,TAM-4,TAM-4);
-					g.setColor(Color.ORANGE);//borde
+					g.setColor(Color.ORANGE);	//*****************************borde*****************************
 					g.drawRect(x+2,y+2,TAM-4,TAM-4);
 					g.drawRect(x+3,y+3,TAM-6,TAM-6);
 				}

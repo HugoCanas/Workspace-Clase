@@ -88,7 +88,6 @@ public class Pieza {
 		return false;
 	}
 
-	//Volver a la posicion inicial
 	public void volverAInicio() {
 		posX=posXinic;
 		posY=posYinic;
