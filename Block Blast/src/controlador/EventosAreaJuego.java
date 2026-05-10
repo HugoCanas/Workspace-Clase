@@ -21,9 +21,13 @@ public class EventosAreaJuego {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if(areaJuego.getEstado()==AreaJuego.GAME_OVER) return;
+				//Si es game over comprobar si pulsa alguno de los botones finalesas
+				if(areaJuego.getEstado()==AreaJuego.GAME_OVER) {
+					comprobarBotonesGameOver(e.getX(),e.getY());
+					return;
+				}
 				if(areaJuego.isParpadeoActivo()) return;
-				//Comprobar si hemos pulsado sobre una pieza
+				//Comprobar si he pulsado una pieza
 				for(Pieza p : areaJuego.getArrayPiezas()) {
 					if(!p.isColocada() && p.contiene(e.getX(),e.getY())) {
 						piezaSeleccionada=p;
@@ -39,21 +43,20 @@ public class EventosAreaJuego {
 				if(piezaSeleccionada==null) return;
 
 				Tablero t=areaJuego.getTablero();
+				//Calculo fila y col
 				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.MARGEN_Y)/Pieza.TAM);
 				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 
 				if(t.cabe(piezaSeleccionada,fila,col)) {
-					//Colocar la pieza
+					//Colocar pieza
 					t.colocar(piezaSeleccionada,fila,col);
 					piezaSeleccionada.setColocada(true);
 
-					//Detectar lineas completas
+					//lineas completas
 					int lineas=t.detectarLineas();
 					if(lineas>0) {
-						//Arrancar parpadeo
 						areaJuego.setParpadeoActivo(true);
 						areaJuego.getRelojParpadeo().start();
-						//Sumar puntos
 						if(lineas==1) {
 							areaJuego.setPuntuacion(areaJuego.getPuntuacion()+10);
 						} else if(lineas>=2) {
@@ -62,7 +65,7 @@ public class EventosAreaJuego {
 						}
 					}
 
-					//Comprobar si las 3 estan colocadas
+					//Comprobar si todas estan colocadas
 					boolean todasColocadas=true;
 					for(Pieza p : areaJuego.getArrayPiezas()) {
 						if(!p.isColocada()) {
@@ -74,12 +77,11 @@ public class EventosAreaJuego {
 						areaJuego.generarPiezas();
 					}
 
-					//Comprobar game over
+					
 					if(areaJuego.comprobarGameOver()) {
 						areaJuego.setEstado(AreaJuego.GAME_OVER);
 					}
 				} else {
-					//No cabe, vuelve a su sitio
 					piezaSeleccionada.volverAInicio();
 				}
 
@@ -89,6 +91,7 @@ public class EventosAreaJuego {
 			}
 		}); //FIN DEL MOUSE LISTENER
 
+		
 		areaJuego.addMouseMotionListener(new MouseMotionListener() {
 
 			@Override
@@ -111,6 +114,27 @@ public class EventosAreaJuego {
 				areaJuego.repaint();
 			}
 		});
+	}
+
+	
+	private void comprobarBotonesGameOver(int mx, int my) {
+		int imgX=areaJuego.getImgDibX();
+		int imgY=areaJuego.getImgDibY();
+		int imgW=areaJuego.getImgDibAncho();
+		int imgH=areaJuego.getImgDibAlto();
+
+		//clic a porcentaje en la imagen
+		double porcX=(double)(mx-imgX)/imgW;
+		double porcY=(double)(my-imgY)/imgH;
+
+		
+		if(porcX>=0.30 && porcX<=0.48 && porcY>=0.78 && porcY<=0.93) {
+			areaJuego.reiniciar();
+		}
+		
+		if(porcX>=0.52 && porcX<=0.70 && porcY>=0.78 && porcY<=0.93) {
+			System.exit(0);
+		}
 	}
 
 	//GETTERS Y SETTERS

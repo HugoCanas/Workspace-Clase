@@ -34,19 +34,21 @@ public class AreaJuego extends JPanel {
 	private int estado;
 	private int puntuacion;
 
-	//Para la previsualizacion
+	
 	private int previewFila,previewCol;
 	private boolean mostrarPreview;
 
-	//Imagen game over
+	
 	private Image imgGameOver;
+	
+	private int imgDibX,imgDibY,imgDibAncho,imgDibAlto;
 
-	//Para la vibracion al hacer combo
+	
 	private Timer relojVibracion;
 	private int vibracionX;
 	private int contVibracion;
 
-	//Para el parpadeo al limpiar lineas
+	
 	private Timer relojParpadeo;
 	private int contParpadeo;
 	private boolean parpadeoVisible;
@@ -64,8 +66,12 @@ public class AreaJuego extends JPanel {
 		previewFila=-1;
 		previewCol=-1;
 		imgGameOver=new ImageIcon("recursos/FotoDerrota.png").getImage();
+		imgDibX=0;
+		imgDibY=0;
+		imgDibAncho=0;
+		imgDibAlto=0;
 
-		//Vibracion
+		//vibracion
 		vibracionX=0;
 		contVibracion=0;
 		relojVibracion=new Timer(40,new ActionListener() {
@@ -87,7 +93,8 @@ public class AreaJuego extends JPanel {
 			}
 		});
 
-		//Parpadeo
+		
+		//parpadeo
 		parpadeoActivo=false;
 		parpadeoVisible=false;
 		contParpadeo=0;
@@ -112,7 +119,7 @@ public class AreaJuego extends JPanel {
 		eventosAreaJuego=new EventosAreaJuego(this);
 	}
 
-	//Crear 3 piezas nuevas
+	
 	public void generarPiezas() {
 		arrayPiezas.clear();
 		for(int i=0;i<3;i++) {
@@ -120,7 +127,16 @@ public class AreaJuego extends JPanel {
 		}
 	}
 
-	//Comprobar si ninguna pieza cabe -> game over
+	
+	public void reiniciar() {
+		tablero=new Tablero();
+		puntuacion=0;
+		estado=JUEGO;
+		generarPiezas();
+		repaint();
+	}
+
+	
 	public boolean comprobarGameOver() {
 		for(Pieza p : arrayPiezas) {
 			if(!p.isColocada() && tablero.cabeEnAlgunSitio(p)) {
@@ -143,7 +159,7 @@ public class AreaJuego extends JPanel {
 				tablero.dibujarParpadeo(g,MARGEN_X+vibracionX,MARGEN_Y,Pieza.TAM);
 			}
 
-			//Previsualizacion
+			//Preview
 			if(mostrarPreview && eventosAreaJuego.getPiezaSeleccionada()!=null) {
 				Pieza sel=eventosAreaJuego.getPiezaSeleccionada();
 				if(tablero.cabe(sel,previewFila,previewCol)) {
@@ -158,7 +174,7 @@ public class AreaJuego extends JPanel {
 				}
 			}
 
-			//Puntuacion abajo
+			//Puntuacion
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Arial",Font.BOLD,18));
 			g.drawString("Puntos: "+puntuacion,20,540);
@@ -169,11 +185,11 @@ public class AreaJuego extends JPanel {
 			int panelW=getWidth();
 			int panelH=getHeight();
 			double escala=Math.max((double)panelW/imgW,(double)panelH/imgH);
-			int anchoFinal=(int)(imgW*escala);
-			int altoFinal=(int)(imgH*escala);
-			int posX=(panelW-anchoFinal)/2;
-			int posY=(panelH-altoFinal)/2;
-			g.drawImage(imgGameOver,posX,posY,anchoFinal,altoFinal,this);
+			imgDibAncho=(int)(imgW*escala);
+			imgDibAlto=(int)(imgH*escala);
+			imgDibX=(panelW-imgDibAncho)/2;
+			imgDibY=(panelH-imgDibAlto)/2;
+			g.drawImage(imgGameOver,imgDibX,imgDibY,imgDibAncho,imgDibAlto,this);
 		}
 	}
 
@@ -256,5 +272,21 @@ public class AreaJuego extends JPanel {
 
 	public Timer getRelojParpadeo() {
 		return relojParpadeo;
+	}
+
+	public int getImgDibX() {
+		return imgDibX;
+	}
+
+	public int getImgDibY() {
+		return imgDibY;
+	}
+
+	public int getImgDibAncho() {
+		return imgDibAncho;
+	}
+
+	public int getImgDibAlto() {
+		return imgDibAlto;
 	}
 }
