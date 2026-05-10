@@ -5,6 +5,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
 import modelo.Pieza;
+import modelo.PiezaEspecial;
 import modelo.Tablero;
 import vista.AreaJuego;
 
@@ -21,13 +22,11 @@ public class EventosAreaJuego {
 
 			@Override
 			public void mousePressed(MouseEvent e) {
-				//Si es game over comprobar si pulsa alguno de los botones finalesas
 				if(areaJuego.getEstado()==AreaJuego.GAME_OVER) {
 					comprobarBotonesGameOver(e.getX(),e.getY());
 					return;
 				}
 				if(areaJuego.isParpadeoActivo()) return;
-				//Comprobar si he pulsado una pieza
 				for(Pieza p : areaJuego.getArrayPiezas()) {
 					if(!p.isColocada() && p.contiene(e.getX(),e.getY())) {
 						piezaSeleccionada=p;
@@ -48,24 +47,29 @@ public class EventosAreaJuego {
 				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 
 				if(t.cabe(piezaSeleccionada,fila,col)) {
-					//Colocar pieza
 					t.colocar(piezaSeleccionada,fila,col);
 					piezaSeleccionada.setColocada(true);
 
-					//lineas completas
 					int lineas=t.detectarLineas();
 					if(lineas>0) {
 						areaJuego.setParpadeoActivo(true);
 						areaJuego.getRelojParpadeo().start();
-						if(lineas==1) {
-							areaJuego.setPuntuacion(areaJuego.getPuntuacion()+10);
-						} else if(lineas>=2) {
-							areaJuego.setPuntuacion(areaJuego.getPuntuacion()+lineas*20);
+						//Sumar combo
+						areaJuego.setCombo(areaJuego.getCombo()+1);
+						//Puntos combo
+						int pts=lineas*10*areaJuego.getCombo();
+						if(piezaSeleccionada instanceof PiezaEspecial) {
+							pts=pts*2;
+						}
+						areaJuego.setPuntuacion(areaJuego.getPuntuacion()+pts);
+						if(lineas>=2) {
 							areaJuego.getRelojVibracion().start();
 						}
+					} else {
+						areaJuego.setCombo(0);
 					}
 
-					//Comprobar si todas estan colocadas
+
 					boolean todasColocadas=true;
 					for(Pieza p : areaJuego.getArrayPiezas()) {
 						if(!p.isColocada()) {
@@ -77,7 +81,7 @@ public class EventosAreaJuego {
 						areaJuego.generarPiezas();
 					}
 
-					
+
 					if(areaJuego.comprobarGameOver()) {
 						areaJuego.setEstado(AreaJuego.GAME_OVER);
 					}
@@ -91,7 +95,7 @@ public class EventosAreaJuego {
 			}
 		}); //FIN DEL MOUSE LISTENER
 
-		
+
 		areaJuego.addMouseMotionListener(new MouseMotionListener() {
 
 			@Override
@@ -104,7 +108,7 @@ public class EventosAreaJuego {
 				piezaSeleccionada.setPosX(e.getX()-despX);
 				piezaSeleccionada.setPosY(e.getY()-despY);
 
-				//Calcular preview
+				//Calculo preview
 				int fila=Math.round((float)(piezaSeleccionada.getPosY()-AreaJuego.MARGEN_Y)/Pieza.TAM);
 				int col=Math.round((float)(piezaSeleccionada.getPosX()-AreaJuego.MARGEN_X)/Pieza.TAM);
 				areaJuego.setPreviewFila(fila);
@@ -116,22 +120,22 @@ public class EventosAreaJuego {
 		});
 	}
 
-	
+
 	private void comprobarBotonesGameOver(int mx, int my) {
 		int imgX=areaJuego.getImgDibX();
 		int imgY=areaJuego.getImgDibY();
 		int imgW=areaJuego.getImgDibAncho();
 		int imgH=areaJuego.getImgDibAlto();
 
-		//clic a porcentaje en la imagen
+		//clic a porcentaje en imagen
 		double porcX=(double)(mx-imgX)/imgW;
 		double porcY=(double)(my-imgY)/imgH;
 
-		
+
 		if(porcX>=0.30 && porcX<=0.48 && porcY>=0.78 && porcY<=0.93) {
 			areaJuego.reiniciar();
 		}
-		
+
 		if(porcX>=0.52 && porcX<=0.70 && porcY>=0.78 && porcY<=0.93) {
 			System.exit(0);
 		}

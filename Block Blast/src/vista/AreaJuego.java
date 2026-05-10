@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -14,6 +15,7 @@ import javax.swing.Timer;
 
 import controlador.EventosAreaJuego;
 import modelo.Pieza;
+import modelo.PiezaEspecial;
 import modelo.Tablero;
 
 public class AreaJuego extends JPanel {
@@ -33,6 +35,7 @@ public class AreaJuego extends JPanel {
 	private EventosAreaJuego eventosAreaJuego;
 	private int estado;
 	private int puntuacion;
+	private int combo;
 
 	
 	private int previewFila,previewCol;
@@ -62,6 +65,7 @@ public class AreaJuego extends JPanel {
 		arrayPiezas=new ArrayList<Pieza>();
 		estado=JUEGO;
 		puntuacion=0;
+		combo=0;
 		mostrarPreview=false;
 		previewFila=-1;
 		previewCol=-1;
@@ -71,7 +75,7 @@ public class AreaJuego extends JPanel {
 		imgDibAncho=0;
 		imgDibAlto=0;
 
-		//vibracion
+		
 		vibracionX=0;
 		contVibracion=0;
 		relojVibracion=new Timer(40,new ActionListener() {
@@ -94,7 +98,7 @@ public class AreaJuego extends JPanel {
 		});
 
 		
-		//parpadeo
+		
 		parpadeoActivo=false;
 		parpadeoVisible=false;
 		contParpadeo=0;
@@ -121,9 +125,15 @@ public class AreaJuego extends JPanel {
 
 	
 	public void generarPiezas() {
+		Random r=new Random();
 		arrayPiezas.clear();
 		for(int i=0;i<3;i++) {
-			arrayPiezas.add(new Pieza(X_PIEZAS[i],Y_PIEZAS));
+			//1/5 especial
+			if(r.nextInt(5)==0) {
+				arrayPiezas.add(new PiezaEspecial(X_PIEZAS[i],Y_PIEZAS));
+			} else {
+				arrayPiezas.add(new Pieza(X_PIEZAS[i],Y_PIEZAS));
+			}
 		}
 	}
 
@@ -131,6 +141,7 @@ public class AreaJuego extends JPanel {
 	public void reiniciar() {
 		tablero=new Tablero();
 		puntuacion=0;
+		combo=0;
 		estado=JUEGO;
 		generarPiezas();
 		repaint();
@@ -151,7 +162,7 @@ public class AreaJuego extends JPanel {
 		super.paint(g);
 
 		if(estado==JUEGO) {
-			//Tablero con vibracion
+			//Tablero vibracion
 			tablero.dibujar(g,MARGEN_X+vibracionX,MARGEN_Y,Pieza.TAM);
 
 			//Parpadeo
@@ -167,7 +178,7 @@ public class AreaJuego extends JPanel {
 				}
 			}
 
-			//Piezas no colocadas
+			
 			for(Pieza p : arrayPiezas) {
 				if(!p.isColocada()) {
 					p.dibujar(g);
@@ -178,6 +189,10 @@ public class AreaJuego extends JPanel {
 			g.setColor(Color.WHITE);
 			g.setFont(new Font("Arial",Font.BOLD,18));
 			g.drawString("Puntos: "+puntuacion,20,540);
+			if(combo>1) {
+				g.setColor(Color.ORANGE);
+				g.drawString("Combo x"+combo,300,540);
+			}
 
 		} else if(estado==GAME_OVER) {
 			int imgW=imgGameOver.getWidth(this);
@@ -232,6 +247,14 @@ public class AreaJuego extends JPanel {
 
 	public void setPuntuacion(int puntuacion) {
 		this.puntuacion=puntuacion;
+	}
+
+	public int getCombo() {
+		return combo;
+	}
+
+	public void setCombo(int combo) {
+		this.combo=combo;
 	}
 
 	public int getPreviewFila() {
