@@ -525,7 +525,7 @@ public class MisSMS extends JFrame {
 				}else {
 					JOptionPane.showMessageDialog(null, "El nombre no puede ser nulo");
 					System.out.println("DEBUG LLEGA AL ELSE"); 
-
+					
 
 
 				}

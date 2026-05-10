@@ -45,7 +45,6 @@ public class EventosRefranes {
 					refranes.setStrRefran(scFichero.nextLine());
 			        // 3. Cargar el resto de líneas en la lista
 					while(scFichero.hasNext()){
-
 						refranes.getModelo().addElement(scFichero.nextLine());
 						numElements ++;
 					}
